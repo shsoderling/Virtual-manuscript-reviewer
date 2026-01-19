@@ -22,16 +22,33 @@ Virtual Manuscript Reviewer uses multiple AI agents with specialized expertise t
 
 ## Installation
 
+### Option 1: Desktop App (Easiest)
+
+For users who don't want to use the command line:
+
+1. Download or clone this repository
+2. Double-click `VMR_Launcher.command`
+3. The launcher will:
+   - Set up a Python environment automatically
+   - Install all dependencies (first run only)
+   - Prompt for your OpenAI API key
+   - Launch the graphical interface
+
+### Option 2: Command Line
+
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/virtual-manuscript-reviewer.git
+git clone https://github.com/shsoderling/Virtual-manuscript-reviewer.git
 cd virtual-manuscript-reviewer
 
 # Install with pip
 pip install -e .
+```
 
-# Or install dependencies manually
-pip install openai requests tiktoken tqdm typed-argument-parser pymupdf diff-match-patch
+### Option 3: Direct from GitHub
+
+```bash
+pip install git+https://github.com/shsoderling/Virtual-manuscript-reviewer.git
 ```
 
 ## Configuration
@@ -43,6 +60,24 @@ export OPENAI_API_KEY="your-api-key-here"
 ```
 
 ## Usage
+
+### Desktop GUI
+
+Launch the graphical interface:
+
+```bash
+# Double-click the launcher
+./VMR_Launcher.command
+
+# Or run directly
+vmr-gui
+```
+
+The GUI allows you to:
+- Drag and drop PDF manuscripts
+- Configure review options (discussion rounds, PubMed search, mentor report)
+- View progress in real-time
+- Automatically saves PDF reports to `~/Downloads/VMR_Reviews/`
 
 ### Command Line
 
@@ -58,6 +93,12 @@ vmr --pdf revised_manuscript.pdf --project-dir my_project --author-response resp
 
 # Individual review (single reviewer with critic feedback)
 vmr --pdf manuscript.pdf --review-type individual
+
+# Disable PDF generation
+vmr --pdf manuscript.pdf --no-pdf
+
+# Disable scientific mentor report
+vmr --pdf manuscript.pdf --no-mentor
 ```
 
 ### Python API
@@ -119,12 +160,17 @@ report_path = tracker.save_report()
 
 ## Output Format
 
-Reviews are saved in both JSON and Markdown formats:
+Reviews are saved in multiple formats:
 
 ```
 reviews/
 ├── Manuscript_Title_abc123.json    # Full discussion transcript
-└── Manuscript_Title_abc123.md      # Formatted review summary
+├── Manuscript_Title_abc123.md      # Formatted review summary
+└── (PDF reports saved to ~/Downloads/VMR_Reviews/)
+
+~/Downloads/VMR_Reviews/
+├── Manuscript_Title_abc123_review.pdf    # Formatted peer review PDF
+└── Manuscript_Title_abc123_mentor.pdf    # Scientific mentor recommendations
 ```
 
 ### Review Structure
@@ -148,10 +194,23 @@ Brief summary of the manuscript's main findings and contributions.
 ### Specific Comments
 Detailed, section-by-section feedback.
 
+### Conclusions Assessment
+Evaluation of which conclusions ARE and ARE NOT supported by the data.
+
 ### Recommendation
 Accept / Minor Revisions / Major Revisions / Reject
 Justification for the recommendation.
 ```
+
+### Scientific Mentor Report
+
+The optional mentor report includes:
+- **Executive Summary**: Quick overview of reviewer concerns
+- **Priority Assessment**: Critical vs important vs minor issues
+- **Textual Revisions**: Specific writing improvements with examples
+- **Experimental Recommendations**: Additional experiments to address concerns
+- **Response Letter Strategy**: Tips for responding to reviewers
+- **Revision Checklist**: Actionable items to address
 
 ## Customizing Reviewers
 
