@@ -44,9 +44,9 @@ PRESENTATION_REVIEWER = Agent(
 
 SCIENTIFIC_CRITIC = Agent(
     title="Scientific Critic",
-    expertise="providing rigorous critical feedback for scientific manuscripts",
-    goal="ensure that reviews are thorough, fair, and constructively critical",
-    role="provide critical feedback on the review process to ensure all important issues are identified and feedback is actionable",
+    expertise="verifying scientific accuracy, fact-checking claims, and evaluating the validity of reviewer statements against established knowledge and the manuscript's actual content",
+    goal="ensure that reviewer statements are scientifically accurate, properly supported, and do not contain factual errors or misinterpretations of the manuscript",
+    role="critically evaluate each claim made by reviewers for scientific accuracy. Identify any reviewer statements that are factually incorrect, misrepresent the manuscript's content, contradict established scientific knowledge, or make unsupported assertions. Flag errors and provide corrections with explanations",
     model=DEFAULT_MODEL,
 )
 
@@ -334,11 +334,23 @@ def individual_review_critic_prompt(critic: Agent, reviewer: Agent) -> str:
     :return: The critic prompt.
     """
     return (
-        f"{critic.title}, please critique {reviewer.title}'s review. "
-        f"Is the review thorough and fair? Are there important issues the reviewer missed? "
-        f"Is the feedback specific and actionable? "
-        f"Suggest improvements to make the review more helpful to the authors. "
-        f"Only provide feedback; do not write the review yourself."
+        f"{critic.title}, please carefully evaluate {reviewer.title}'s review for scientific accuracy.\n\n"
+        f"For each major claim or criticism made by the reviewer, assess:\n\n"
+        f"1. **Factual Accuracy**: Are the reviewer's scientific statements correct? Do they accurately represent "
+        f"established knowledge in the field? Flag any factually incorrect claims.\n\n"
+        f"2. **Manuscript Interpretation**: Did the reviewer correctly understand and represent what the authors "
+        f"actually wrote? Identify any misreadings or mischaracterizations of the manuscript's content.\n\n"
+        f"3. **Supported Assertions**: Are the reviewer's criticisms justified by the manuscript's actual content? "
+        f"Flag any unsupported or speculative criticisms.\n\n"
+        f"4. **Logical Consistency**: Are the reviewer's arguments logically sound? Identify any logical fallacies "
+        f"or contradictions.\n\n"
+        f"Format your response as:\n"
+        f"- **Verified Claims**: List reviewer statements that are accurate and well-supported.\n"
+        f"- **Errors/Corrections**: For each error found, quote the reviewer's statement, explain why it is "
+        f"incorrect, and provide the correction.\n"
+        f"- **Unsupported Assertions**: List claims the reviewer made without adequate justification.\n"
+        f"- **Recommendations**: Suggest how the reviewer should revise their review.\n\n"
+        f"Be rigorous but fair. Only flag genuine errors, not differences of opinion."
     )
 
 

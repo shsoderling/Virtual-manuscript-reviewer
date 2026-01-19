@@ -7,6 +7,32 @@ from typing import Optional
 import threading
 import queue
 
+# Set Qt plugin path BEFORE importing PyQt6 - critical for bundled apps
+def _setup_qt_plugins():
+    """Configure Qt plugin path for PyInstaller bundles."""
+    if getattr(sys, 'frozen', False):
+        # Running as compiled app
+        bundle_dir = Path(sys._MEIPASS) if hasattr(sys, '_MEIPASS') else Path(sys.executable).parent
+
+        # Check various possible plugin locations
+        possible_paths = [
+            bundle_dir / 'PyQt6' / 'Qt6' / 'plugins',
+            bundle_dir / 'PyQt6' / 'Qt' / 'plugins',
+            bundle_dir.parent / 'Frameworks' / 'PyQt6' / 'Qt6' / 'plugins',
+            bundle_dir.parent / 'Resources' / 'PyQt6' / 'Qt6' / 'plugins',
+        ]
+
+        for plugin_path in possible_paths:
+            if plugin_path.exists():
+                os.environ['QT_PLUGIN_PATH'] = str(plugin_path)
+                # Also set QT_QPA_PLATFORM_PLUGIN_PATH for the specific platform plugins
+                platforms_path = plugin_path / 'platforms'
+                if platforms_path.exists():
+                    os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = str(platforms_path)
+                break
+
+_setup_qt_plugins()
+
 from PyQt6.QtWidgets import (
     QApplication,
     QMainWindow,
