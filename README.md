@@ -4,7 +4,7 @@ An AI-powered manuscript review system using multi-agent LLM collaboration for b
 
 ## Overview
 
-Virtual Manuscript Reviewer uses multiple AI agents with specialized expertise to provide comprehensive peer review feedback for scientific manuscripts. The system simulates a traditional peer review process with:
+Virtual Manuscript Reviewer uses multiple AI agents with specialized expertise to provide comprehensive peer review feedback for scientific manuscripts before you submit to a journal. The system simulates a traditional peer review process with:
 
 - **Editor**: Synthesizes feedback and provides overall recommendations
 - **Methodology Reviewer**: Evaluates experimental design, statistics, and reproducibility
