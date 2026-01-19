@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "virtual-manuscript-reviewer"
+dynamic = ["version"]
+authors = [
+    { name = "Scott Soderling" },
+]
+description = "An AI-powered manuscript review system using multi-agent LLM collaboration for biomedical research papers."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = [
+    "openai",
+    "requests",
+    "tiktoken",
+    "tqdm",
+    "typed-argument-parser",
+    "pymupdf",  # PDF parsing
+    "diff-match-patch",  # For revision tracking
+    "reportlab",  # PDF generation
+    "certifi",  # SSL certificates
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+keywords = [
+    "manuscript review",
+    "peer review",
+    "large language model",
+    "LLM",
+    "scientific research",
+    "biomedical",
+]
+
+[tool.hatch.version]
+path = "src/virtual_manuscript_reviewer/__about__.py"
+
+[project.scripts]
+vmr = "virtual_manuscript_reviewer.cli:main"
