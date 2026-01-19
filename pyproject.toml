@@ -22,6 +22,7 @@ dependencies = [
     "diff-match-patch",  # For revision tracking
     "reportlab",  # PDF generation
     "certifi",  # SSL certificates
+    "PyQt6",  # Desktop GUI
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -47,3 +48,7 @@ path = "src/virtual_manuscript_reviewer/__about__.py"
 
 [project.scripts]
 vmr = "virtual_manuscript_reviewer.cli:main"
+vmr-gui = "virtual_manuscript_reviewer.gui:main"
+
+[project.gui-scripts]
+"Virtual Manuscript Reviewer" = "virtual_manuscript_reviewer.gui:main"
